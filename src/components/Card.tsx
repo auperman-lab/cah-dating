@@ -1,5 +1,4 @@
-// src/components/Card.tsx
-import React, {useState} from "react";
+import React from "react";
 
 export type Suit = "hearts" | "diamonds" | "clubs" | "spades";
 export type Rank = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
@@ -17,21 +16,11 @@ const suitSymbols: Record<Suit, string> = {
   spades: "♠",
 };
 
-const Card: React.FC<CardProps> = ({ suit, rank, faceUp = true,  }) => {
-  const [isFaceUp, setIsFaceUp] = useState(faceUp)
-
-  const flipCard = ()=>{
-    setIsFaceUp(prev => !prev);
-  }
-
+const Card: React.FC<CardProps> = ({ suit, rank, faceUp = true }) => {
   return (
-    <div
-      className={`w-24 h-36 border rounded-lg shadow-md p-2 flex flex-col items-center justify-between text-xl cursor-pointer ${
-        isFaceUp ? "bg-white text-black" : "bg-black text-white"
-      }`}
-      onClick={flipCard}
-    >
-      {isFaceUp ? (
+    <div className={`w-24 h-36 border rounded-lg shadow-md p-2 flex flex-col items-center justify-between text-xl cursor-pointer
+      ${faceUp ? "bg-white text-black" : "bg-black text-white"}`}>
+      {faceUp ? (
         <>
           <div className="self-start">{rank}</div>
           <div className="text-3xl">{suitSymbols[suit]}</div>
