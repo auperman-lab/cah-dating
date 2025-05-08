@@ -56,7 +56,7 @@ const CardContainer: React.FC<CardContainerProps> = ({x = 0, y = 0, cardProp}) =
     position: "absolute",
     transform: `translate(${position.x + (transform?.x || 0)}px, ${position.y + (transform?.y || 0)}px) scale(${scale})`,
     transition: "transform 0.2s ease",
-    zIndex: isHovered ? 10 : "auto",
+    zIndex: isHovered ? 10 : 1,
     cursor: "grab"
 
   };

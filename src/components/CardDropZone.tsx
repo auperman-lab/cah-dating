@@ -4,9 +4,13 @@ import { useDroppable } from "@dnd-kit/core";
 interface CardDropZoneProps {
   id: string;
   children?: React.ReactNode;
+  x?:number;
+  y?:number;
+  w:number;
+  h:number;
 }
 
-const CardDropZone: React.FC<CardDropZoneProps> = ({ id, children }) => {
+const CardDropZone: React.FC<CardDropZoneProps> = ({ id, children, w, h, x, y }) => {
   const { setNodeRef, isOver } = useDroppable({
     id,
     data: {
@@ -18,7 +22,15 @@ const CardDropZone: React.FC<CardDropZoneProps> = ({ id, children }) => {
   return (
     <div
       ref={setNodeRef}
-      className={`w-[300px] h-[400px] bg-blue flex items-center justify-center border-2 transition-all duration-200 mx-auto my-5 p-2 ${
+      style={{
+        position: "absolute",
+        left: `${x}%`,
+        top: `${y}%`,
+        width: `${w}%`,
+        height: `${h}%`,
+
+    }}
+      className={`z-0 bg-blue flex items-center justify-center border-2 transition-all duration-200 mx-auto my-5 p-2 ${
         isOver ? "border-green-500 bg-green-50" : "border-gray-400 border-dashed"
       }`}
     >

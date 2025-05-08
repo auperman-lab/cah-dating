@@ -18,20 +18,14 @@ function App() {
 
 
   return (
-    <div className="relative w-screen h-screen">
+    <div className="w-[100%] h-screen relative">
       <DndContext collisionDetection={pointerWithin}>
 
         {cards.map((card:CardData) => (
           <CardContainer key={`${card.rank}-${card.suit}`} cardProp={card}/>
         ))}
 
-
-        <CardDropZone id="zone-1" >
-        </CardDropZone >
-
-        <CardDropZone id="zone-2" >
-        </CardDropZone >
-
+        <CardDropZone id="zone-1" w={80} h={20} y={70} x={10}/>
 
       </DndContext>
     </div>
