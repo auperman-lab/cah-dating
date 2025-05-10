@@ -12,6 +12,9 @@ import CardDropZone from "./components/CardDropZone.tsx";
 import {Suit, Rank} from "./components/Card.tsx"
 import {arrayMove, sortableKeyboardCoordinates} from "@dnd-kit/sortable";
 import {useState} from "react";
+import rawCardData from './components/cards.json';
+import rawEnemyCardData from './components/enemyCards.json';
+
 
 interface CardData {
   id: string
@@ -21,17 +24,20 @@ interface CardData {
 }
 
 function App() {
-  const [cards,setCards]= useState<CardData[]>([
-    { suit: "hearts", rank: "A", id: "A-hearts" },
-    { suit: "hearts", rank: "A", id: "A1-hearts" },
-    { suit: "hearts", rank: "A", id: "A2-hearts" },
-    { suit: "hearts", rank: "A", id: "A9-hearts" },
-    { suit: "hearts", rank: "A", id: "A7-hearts" },
-    { suit: "hearts", rank: "A", id: "A5-hearts" },
-    { suit: "hearts", rank: "A", id: "A6-hearts" },
-    { suit: "hearts", rank: "A", id: "A4-hearts" },
-    { suit: "hearts", rank: "A", id: "A3-hearts" },
-    { suit: "spades", rank: "K", id: "K-spades" },]);
+  const [cards,setCards]= useState<CardData[]>(rawCardData as CardData[]);
+  const [enemyCards]= useState<CardData[]>(rawEnemyCardData as CardData[]);
+
+  const [numPlayers] = useState(3);
+
+
+  const playerZones = [
+    { x: -5, y: 40, angle: 90  },
+    { x: 85, y: 40, angle: -90},
+    { x: 40, y: -10, angle: 180 },
+    { x: 0, y: 5, angle: 135 },
+    { x: 80, y: 5, angle: -135},
+  ];
+
 
   const getCardPos = (id:string) => cards.findIndex((card) => card.id === id);
 
@@ -61,7 +67,22 @@ function App() {
       <DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd} sensors={sensors}>
 
 
-        <CardDropZone id="zone-1" cardContainerProp={cards} w={80} h={20} y={70} x={10}/>
+        <CardDropZone id="zone-1" cardContainerProp={cards} w={80} h={20} y={70} x={10} radius={80}/>
+
+        {playerZones.slice(0, numPlayers).map((zone, idx) => (
+          <CardDropZone
+            key={`zone-${idx}`}
+            id={`zone-${idx}`}
+            cardContainerProp={enemyCards}
+            w={20}
+            h={20}
+            x={zone.x}
+            y={zone.y}
+            angle={zone.angle}
+            radius={20}
+          />
+        ))}
+
 
       </DndContext>
     </div>

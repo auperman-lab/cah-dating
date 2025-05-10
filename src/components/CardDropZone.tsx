@@ -15,9 +15,11 @@ interface CardDropZoneProps {
   y?: number;
   w: number;
   h: number;
+  angle?: number;
+  radius: number;
 }
 
-const CardDropZone: React.FC<CardDropZoneProps> = ({ cardContainerProp, w, h, x = 0, y = 0 }) => {
+const CardDropZone: React.FC<CardDropZoneProps> = ({ cardContainerProp, w, h, x = 0, y = 0, angle, radius }) => {
 
 
 
@@ -29,6 +31,7 @@ const CardDropZone: React.FC<CardDropZoneProps> = ({ cardContainerProp, w, h, x 
         top: `${y}%`,
         width: `${w}%`,
         height: `${h}%`,
+        transform: `rotate(${angle}deg)`,
       }}
       className="bg-gray-400 rounded-lg shadow-lg p-[20px]"
     >
@@ -41,7 +44,7 @@ const CardDropZone: React.FC<CardDropZoneProps> = ({ cardContainerProp, w, h, x 
               cardProp={card}
               index={index}
               total={cardContainerProp.length}
-
+              radius={radius}
             />
           );
         })}
