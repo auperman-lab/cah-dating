@@ -1,43 +1,53 @@
 import React from "react";
-import { useDroppable } from "@dnd-kit/core";
+import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable";
+import CardContainer from "./CardContainer.tsx";
+import {Rank, Suit} from "./Card.tsx";
 
 interface CardDropZoneProps {
   id: string;
-  children?: React.ReactNode;
-  x?:number;
-  y?:number;
-  w:number;
-  h:number;
+  cardContainerProp: {
+    id: string
+    suit: Suit;
+    rank: Rank;
+    faceUp?: boolean;
+  }[];
+  x?: number;
+  y?: number;
+  w: number;
+  h: number;
 }
 
-const CardDropZone: React.FC<CardDropZoneProps> = ({ id, children, w, h, x, y }) => {
-  const { setNodeRef, isOver } = useDroppable({
-    id,
-    data: {
-      accepts: ["card"],
-    },
-  });
+const CardDropZone: React.FC<CardDropZoneProps> = ({ cardContainerProp, w, h, x = 0, y = 0 }) => {
+
 
 
   return (
     <div
-      ref={setNodeRef}
       style={{
         position: "absolute",
         left: `${x}%`,
         top: `${y}%`,
         width: `${w}%`,
         height: `${h}%`,
-
-    }}
-      className={`z-0 bg-blue flex items-center justify-center border-2 transition-all duration-200 mx-auto my-5 p-2 ${
-        isOver ? "border-green-500 bg-green-50" : "border-gray-400 border-dashed"
-      }`}
+      }}
+      className="bg-gray-400 rounded-lg shadow-lg p-[20px]"
     >
-      {children || "Drop cards here"}
+      <SortableContext items={cardContainerProp} strategy={horizontalListSortingStrategy}>
+        {cardContainerProp.map((card, index) => {
+
+          return (
+            <CardContainer
+              key={card.id}
+              cardProp={card}
+              index={index}
+              total={cardContainerProp.length}
+
+            />
+          );
+        })}
+      </SortableContext>
     </div>
   );
-
 };
 
 export default CardDropZone;

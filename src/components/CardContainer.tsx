@@ -1,64 +1,51 @@
-import React, {useState} from "react";
-import {useDndMonitor, useDraggable} from "@dnd-kit/core";
+import React, { useState} from "react";
 import {Rank, Suit} from "./Card.tsx";
 import Card from "./Card.tsx";
+import {useSortable} from "@dnd-kit/sortable";
 
 interface CardContainerProps {
-  x?: number;
-  y?: number;
   cardProp: {
+    id: string;
     suit: Suit;
     rank: Rank;
     faceUp?: boolean;
   };
+  index: number;
+  total: number;
 }
 
-
-const CardContainer: React.FC<CardContainerProps> = ({x = 0, y = 0, cardProp}) => {
-
-  const id = `${cardProp.rank}-${cardProp.suit}`;
-
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id,
+const CardContainer: React.FC<CardContainerProps> = ({ cardProp, index, total }) => {
+  const { attributes, listeners, setNodeRef, transform } = useSortable({
+    id: cardProp.id,
     data: {
       type: "card",
     },
   });
+
   const [isHovered, setIsHovered] = useState(false);
-  const [position, setPosition] = useState({ x: x, y: y });
-
-
-
-  useDndMonitor({
-    onDragEnd(event) {
-      const { delta, active, over } = event;
-
-      if (over && over.data.current?.accepts?.includes(active.data.current?.type)) {
-        console.log(`${active.id} dropped in ${over.id}`);
-
-      } else {
-        console.log("drag event: ", delta, active, over);
-      }
-
-
-      if (event.active.id === id && event.delta) {
-        setPosition((prev) => ({
-          x: prev.x + event.delta.x,
-          y: prev.y + event.delta.y,
-        }));
-      }
-    },
-  });
-
   const scale = isHovered ? 1.1 : 1;
+
+  const dragX = transform?.x ?? 0;
+  const dragY = transform?.y ?? 0;
+
+  const middle = (total - 1) / 2;
+  const angle = (index - middle) * 3; // this is your angular spread
+  const radius = 1200; // larger radius = flatter curve
+  const rad = (angle * Math.PI) / 180;
+
+  const offsetX = radius * Math.sin(rad);
+  const offsetY = radius * (1 - Math.cos(rad));
+
 
   const style: React.CSSProperties = {
     position: "absolute",
-    transform: `translate(${position.x + (transform?.x || 0)}px, ${position.y + (transform?.y || 0)}px) scale(${scale})`,
-    transition: "transform 0.2s ease",
+    transform: `translate(${dragX+offsetX}px, ${dragY + offsetY}px) rotate(${angle}deg) scale(${scale})`,
+    left: `45%`,
+    transformOrigin: "bottom center",
+    transition: "transform 300ms ease",
     zIndex: isHovered ? 10 : 1,
-    cursor: "grab"
-
+    cursor: "grab",
+    touchAction: "none",
   };
 
   return (
@@ -70,7 +57,7 @@ const CardContainer: React.FC<CardContainerProps> = ({x = 0, y = 0, cardProp}) =
       {...attributes}
       {...listeners}
     >
-      <Card suit={cardProp.suit} rank={cardProp.rank} faceUp={cardProp.faceUp}/>
+      <Card suit={cardProp.suit} rank={cardProp.rank} faceUp={cardProp.faceUp} />
     </div>
   );
 };
