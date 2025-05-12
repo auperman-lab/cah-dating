@@ -1,68 +1,59 @@
 import './App.css';
 import PlayPage from "./pages/PlayPage.tsx"
+import {Rank, Suit} from "./components/Card.tsx";
+import {useState} from "react";
+import rawEnemyCardData from "./data/enemyCards.json"
+import rawCardData from "./data/cards.json"
 
-// interface CardData {
-//   id: string
-//   suit: Suit;
-//   rank: Rank;
-//   faceUp?: boolean;
-// }
+
+interface CardData {
+  id: string
+  suit: Suit;
+  rank: Rank;
+  faceUp?: boolean;
+}
 
 function App() {
-  // const [cards, setCards] = useState<CardData[]>(rawCardData as CardData[]);
-  // const [enemyCards] = useState<CardData[]>(rawEnemyCardData as CardData[]);
-
-  // const handleDragEnd = (event: DragEndEvent) => {
-  //   const {active, over} = event;
-  //
-  //   if (active.id === over?.id) return;
-  //
-  //   setCards((card) => {
-  //     const originalPos = getCardPos(active.id as string);
-  //     const newPos = getCardPos(over?.id as string);
-  //
-  //     return arrayMove(card, originalPos, newPos);
-  //   });
-  // };
+  const [cards] = useState<CardData[]>(rawCardData as CardData[]);
+  const [enemyCards] = useState<CardData[]>(rawEnemyCardData as CardData[]);
 
   const users = [
     {
       id: 1,
       name: 'John Doe',
-      cards: [],
+      cards: cards,
       isCurrentUser: true,
     }, {
       id: 2,
       name: 'John Doe',
-      cards: []
+      cards: enemyCards
     },
     {
-      id: 2,
+      id: 7,
       name: 'John Doe',
-      cards: []
+      cards: enemyCards
     },
     {
-      id: 2,
+      id: 6,
       name: 'John Doe',
-      cards: []
+      cards: enemyCards
     },
     {
       id: 3,
       name: 'John Doe',
-      cards: []
+      cards: enemyCards
     }
     ,
     {
       id: 4,
       name: 'John Doe',
-      cards: []
+      cards: enemyCards
     },
     {
       id: 5,
       name: 'John Doe',
-      cards: []
+      cards: enemyCards
     }
-
   ]
 
 

@@ -1,11 +1,22 @@
 import styles from './PlayPage.module.scss';
-import React from "react";
+import React, {useState} from "react";
+import {Rank, Suit} from "../components/Card.tsx";
+import CardDropZone from "../components/CardDropZone";
+import {DndContext, DragEndEvent, pointerWithin} from "@dnd-kit/core";
+import {arrayMove} from "@dnd-kit/sortable";
 
 interface Player {
   id: number,
   name: string,
-  cards: string[],
+  cards: CardData[],
   isCurrentUser?: boolean,
+}
+
+interface CardData {
+  id: string
+  suit: Suit;
+  rank: Rank;
+  faceUp?: boolean;
 }
 
 interface Props {
@@ -17,7 +28,10 @@ const PlayPage: React.FC<Props> = ({ users }) => {
   const left: Player[] = [];
   const right: Player[] = [];
   const top: Player[] = [];
-  let currentUser: Player | undefined; // It's possible there's no currentUser
+  let currentUser: Player | undefined;
+  const [cards, setCards] = useState<CardData[]>(currentUser?.cards)
+  const getCardPos = (id:string) => cards.findIndex((card) => card.id === id);
+
 
   function splitPlayers(userArray:Player[]) {
     currentUser = userArray.find(user => user.isCurrentUser);
@@ -27,11 +41,20 @@ const PlayPage: React.FC<Props> = ({ users }) => {
       else if (index % 3 === 1) right.push(player);
       else top.push(player);
     });
-    console.log("left", left);
-    console.log("right", right);
-    console.log("top", top);
-    console.log("currentUser", currentUser);
   }
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const {active, over} = event;
+
+    if (active.id === over?.id) return;
+
+    setCards((card) => {
+      const originalPos = getCardPos(active.id as string);
+      const newPos = getCardPos(over?.id as string);
+
+      return arrayMove(card, originalPos, newPos);
+    });
+  };
 
   splitPlayers(users);
 
@@ -39,23 +62,33 @@ const PlayPage: React.FC<Props> = ({ users }) => {
     <div className={styles.PlayPageWrap}>
       <div className={styles.playersColumn}>
         {left.map(player => (
-          <div key={player.id} className={styles.playerWrapColumn}>{player.name}</div>
+          <div key={player.id} className={styles.playerWrapColumn}>
+            <CardDropZone player={player} angle={90} />
+          </div>
           ))}
       </div>
       <div className={styles.tableColumn}>
         <div className={styles.playerblock}>
           {top.map(player => (
-            <div key={player.id} className={styles.playerWrap}>{player.name}</div>
+            <div key={player.id} className={styles.playerWrap}>
+              <CardDropZone   player={player}></CardDropZone>
+            </div>
             ))}
         </div>
         <div className={styles.table}></div>
         <div className={styles.userblock}>
-          {currentUser && <div className={styles.userWrap}>{currentUser.name} (You)</div>} {/* Render currentUser */}
+          {currentUser && <div className={styles.userWrap}>
+            <DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd}>
+              <CardDropZone  player={currentUser}></CardDropZone>
+            </DndContext>
+          </div>}
         </div>
       </div>
       <div className={styles.playersColumn}>
         {right.map(player => (
-          <div key={player.id} className={styles.playerWrapColumn}>{player.name}</div>
+          <div key={player.id} className={styles.playerWrapColumn}>
+            <CardDropZone player={player} angle={-90} />
+          </div>
         ))}
       </div>
     </div>

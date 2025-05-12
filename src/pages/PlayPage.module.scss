@@ -23,29 +23,34 @@
     max-width: 420px;
     height: 100%;
     color: black;
-
+    transform: rotate(180deg);
   }
 
   .playersColumn {
     height: 100vh;
     width: 100%;
-    max-width: 300px;
+    max-width: 340px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding-top: 6vh;
 
+
     .playerWrapColumn {
-      background-color: #0b3d0b	;
+      background-color: #0b3d0b;
       border-radius: 20px;
       border: 5px solid saddlebrown;
-      width: 100%;
-      max-height: 420px;
-      max-width: 320px;
-      margin-bottom: 10vh;
       height: 100%;
-      color: black;
+      width: 100%;
+      max-height: 380px;
+      max-width: 280px;
+      margin-bottom: 10vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
     }
+
   }
   .tableColumn{
     height: 100vh;
