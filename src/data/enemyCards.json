@@ -29,42 +29,42 @@
   {
     "suit": "hearts",
     "rank": "A",
-    "id": "b-hearts",
+    "id": "b7-hearts",
     "faceUp": false
 
   },
   {
     "suit": "hearts",
     "rank": "A",
-    "id": "b-hearts",
+    "id": "b6-hearts",
     "faceUp": false
 
   },
   {
     "suit": "hearts",
     "rank": "A",
-    "id": "b-hearts",
+    "id": "b5-hearts",
     "faceUp": false
 
   },
   {
     "suit": "hearts",
     "rank": "A",
-    "id": "b-hearts",
+    "id": "b4-hearts",
     "faceUp": false
 
   },
   {
     "suit": "hearts",
     "rank": "A",
-    "id": "b-hearts",
+    "id": "b3-hearts",
     "faceUp": false
 
   },
   {
     "suit": "spades",
     "rank": "K",
-    "id": "b-spades",
+    "id": "bk-spades",
     "faceUp": false
 
   }

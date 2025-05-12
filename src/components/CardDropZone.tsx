@@ -32,7 +32,6 @@ const CardDropZone: React.FC<CardDropZoneProps> = ({ player, angle= null }) => {
       if (dropZoneRef.current) {
         setParentWidth(dropZoneRef.current.offsetWidth);
         setParentHeight(dropZoneRef.current.offsetHeight);
-        console.log(dropZoneRef.current.offsetWidth);
       }
     }
 
@@ -44,7 +43,6 @@ const CardDropZone: React.FC<CardDropZoneProps> = ({ player, angle= null }) => {
     };
   }, []);
 
-  console.log("angle", angle)
 
   return (
     <div

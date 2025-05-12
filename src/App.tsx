@@ -17,7 +17,7 @@ function App() {
   const [cards] = useState<CardData[]>(rawCardData as CardData[]);
   const [enemyCards] = useState<CardData[]>(rawEnemyCardData as CardData[]);
 
-  const users = [
+  const players = [
     {
       id: 1,
       name: 'John Doe',
@@ -56,10 +56,17 @@ function App() {
     }
   ]
 
+  const currentPlayer ={
+    id: 1,
+    name: 'John Doe',
+    cards: cards,
+    isCurrentUser: true,
+  }
+
 
   return (
     <div className="w-[100%] h-screen relative">
-      <PlayPage users={users}></PlayPage>
+      <PlayPage players={players} currentPlayer={currentPlayer }></PlayPage>
 
       {/*<DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd} sensors={sensors}>*/}
 
