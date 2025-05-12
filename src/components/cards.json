@@ -1,0 +1,52 @@
+[
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A1-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A2-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A9-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A7-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A5-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A6-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A4-hearts"
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "A3-hearts"
+  },
+  {
+    "suit": "spades",
+    "rank": "K",
+    "id": "K-spades"
+  }
+]

@@ -60,6 +60,7 @@ const CardContainer: React.FC<CardContainerProps> = ({ cardProp, index, total, r
     zIndex: isHovered ? 10 : 1,
     cursor: "grab",
     touchAction: "none",
+    backgroundColor: "red",
   };
 
   return (
