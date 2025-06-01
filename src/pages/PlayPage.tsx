@@ -1,9 +1,10 @@
 import styles from './PlayPage.module.scss';
 import React, {useState} from "react";
 import {Rank, Suit} from "../components/Card.tsx";
-import CardDropZone from "../components/CardDropZone";
+import CardPlayerZone from "../components/CardPlayerZone.tsx";
 import {DndContext, DragEndEvent, pointerWithin} from "@dnd-kit/core";
 import {arrayMove} from "@dnd-kit/sortable";
+import TableZone from "../components/TableZone.tsx";
 
 interface Player {
   id: number,
@@ -31,6 +32,8 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
   const top: Player[] = [];
   let currentUser: Player = currentPlayer;
   const [cards, setCards] = useState<CardData[]>(currentPlayer.cards)
+  const [tableCards, setTableCards] = useState<CardData[]>([]); // State for cards on the table
+
   const getCardPos = (id:string) => cards.findIndex((card) => card.id === id);
 
 
@@ -46,24 +49,38 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
   const handleDragEnd = (event: DragEndEvent) => {
     const {active, over} = event;
 
-    if (active.id === over?.id) return;
 
-    setCards((card) => {
-      const originalPos = getCardPos(active.id as string);
-      const newPos = getCardPos(over?.id as string);
+    if (active && over && over.id === "table-zone") {
+      const cardId = active.id;
+      const cardIndex = getCardPos(cardId as string);
 
-      return arrayMove(card, originalPos, newPos);
-    });
-  };
+    if (cardIndex !== -1) {
+       const cardToMove = cards[cardIndex];
+          setCards((prevCards) => prevCards.filter((card) => card.id !== cardId));
+          setTableCards((prevTableCards) => [...prevTableCards, cardToMove]);
+      }
+       return;
+    }
+
+    if (active.id !== over?.id && over) {
+      setCards((cards) => {
+          const originalPos = getCardPos(active.id as string);
+          const newPos = getCardPos(over?.id as string);
+          return arrayMove(cards, originalPos, newPos);
+        });
+       }
+};
 
   splitPlayers(players);
 
   return (
+    <DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd}>
+
     <div className={styles.PlayPageWrap}>
       <div className={styles.playersColumn}>
         {left.map(player => (
           <div key={player.id} className={styles.playerWrapColumn}>
-            <CardDropZone player={player} angle={90} />
+            <CardPlayerZone player={player} cards={player.cards} angle={90} />
           </div>
           ))}
       </div>
@@ -71,27 +88,30 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
         <div className={styles.playerblock}>
           {top.map(player => (
             <div key={player.id} className={styles.playerWrap}>
-              <CardDropZone   player={player}></CardDropZone>
+              <CardPlayerZone player={player}  cards={player.cards}></CardPlayerZone>
             </div>
             ))}
         </div>
-        <div className={styles.table}></div>
+        <div className={styles.table}>
+          <TableZone droppedCards={tableCards}/>
+        </div>
         <div className={styles.userblock}>
           {currentUser && <div className={styles.userWrap}>
-            <DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd}>
-              <CardDropZone player={currentUser}></CardDropZone>
-            </DndContext>
+            <CardPlayerZone player={currentPlayer} cards={cards} />
+
           </div>}
         </div>
       </div>
       <div className={styles.playersColumn}>
         {right.map(player => (
           <div key={player.id} className={styles.playerWrapColumn}>
-            <CardDropZone player={player} angle={-90} />
+            <CardPlayerZone player={player} cards={player.cards} angle={-90} />
           </div>
         ))}
       </div>
     </div>
+    </DndContext>
+
   );
 };
 

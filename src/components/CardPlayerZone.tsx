@@ -1,14 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
-import {horizontalListSortingStrategy, SortableContext} from "@dnd-kit/sortable";
 import CardContainer from "./CardContainer.tsx";
 import {Rank, Suit} from "./Card.tsx";
-
-interface Player {
-  id: number,
-  name: string,
-  cards: CardData[],
-  isCurrentUser?: boolean,
-}
 
 interface CardData {
   id: string
@@ -17,12 +9,22 @@ interface CardData {
   faceUp?: boolean;
 }
 
+interface Player {
+  id: number,
+  name: string,
+  cards: CardData[],
+  isCurrentUser?: boolean,
+}
+
+
+
 interface CardDropZoneProps {
   player: Player;
+  cards: CardData[]
   angle?: number;
 }
 
-const CardDropZone: React.FC<CardDropZoneProps> = ({ player, angle= null }) => {
+const CardPlayerZone: React.FC<CardDropZoneProps> = ({ player,cards, angle= null }) => {
   const dropZoneRef = useRef<HTMLDivElement>(null);
   const [parentWidth, setParentWidth] = useState<number>(0);
   const [parentHeight, setParentHeight] = useState<number>(0);
@@ -70,24 +72,20 @@ const CardDropZone: React.FC<CardDropZoneProps> = ({ player, angle= null }) => {
             : {}),
         }}
       >
-
-        <SortableContext items={player.cards} strategy={horizontalListSortingStrategy}>
-          {player.cards.map((card, index) => {
-
+          {cards.map((card, index) => {
             return (
               <CardContainer
                 key={card.id}
                 cardProp={card}
                 index={index}
-                total={player.cards.length}
+                total={cards.length}
                 parentWidth={angle ? parentHeight : parentWidth}
               />
             );
           })}
-        </SortableContext>
       </div>
     </div>
   );
 };
 
-export default CardDropZone;
+export default CardPlayerZone;

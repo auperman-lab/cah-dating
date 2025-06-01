@@ -1,15 +1,18 @@
 import React, {useState} from "react";
 import {Rank, Suit} from "./Card.tsx";
 import Card from "./Card.tsx";
-import {useSortable} from "@dnd-kit/sortable";
+import {useDraggable} from "@dnd-kit/core";
+
+
+interface CardData {
+  id: string
+  suit: Suit;
+  rank: Rank;
+  faceUp?: boolean;
+}
 
 interface CardContainerProps {
-  cardProp: {
-    id: string;
-    suit: Suit;
-    rank: Rank;
-    faceUp?: boolean;
-  };
+  cardProp: CardData;
   index: number;
   total: number;
   parentWidth: number; // New prop for parent container width
@@ -17,10 +20,14 @@ interface CardContainerProps {
 }
 
 const CardContainer: React.FC<CardContainerProps> = ({ cardProp, index, total, parentWidth }) => {
-  const { attributes, listeners, setNodeRef, transform } = useSortable({
+
+
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: cardProp.id,
     data: {
       type: "card",
+      card: cardProp,
+      source: "player-hand", // Indicate where the card came from
     },
   });
 
