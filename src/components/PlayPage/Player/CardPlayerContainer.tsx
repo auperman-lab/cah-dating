@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {Rank, Suit} from "./Card.tsx";
-import Card from "./Card.tsx";
+import {Rank, Suit} from "../Card.tsx";
+import Card from "../Card.tsx";
 import {useDraggable} from "@dnd-kit/core";
 
 
@@ -19,7 +19,7 @@ interface CardContainerProps {
 
 }
 
-const CardContainer: React.FC<CardContainerProps> = ({ cardProp, index, total, parentWidth }) => {
+const CardPlayerContainer: React.FC<CardContainerProps> = ({ cardProp, index, total, parentWidth }) => {
 
 
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -72,4 +72,4 @@ const CardContainer: React.FC<CardContainerProps> = ({ cardProp, index, total, p
   );
 };
 
-export default CardContainer;
+export default CardPlayerContainer;

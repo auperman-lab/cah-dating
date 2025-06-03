@@ -1,10 +1,10 @@
 import styles from './PlayPage.module.scss';
 import React, {useState} from "react";
-import {Rank, Suit} from "../components/Card.tsx";
-import CardPlayerZone from "../components/CardPlayerZone.tsx";
+import {Rank, Suit} from "../components/PlayPage/Card.tsx";
+import CardPlayerZone from "../components/PlayPage/Player/CardPlayerZone.tsx";
 import {DndContext, DragEndEvent, pointerWithin} from "@dnd-kit/core";
 import {arrayMove} from "@dnd-kit/sortable";
-import TableZone from "../components/TableZone.tsx";
+import TableZone from "../components/PlayPage/Table/TableZone.tsx";
 
 interface Player {
   id: number,

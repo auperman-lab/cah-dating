@@ -1,6 +1,6 @@
 import './App.css';
 import PlayPage from "./pages/PlayPage.tsx"
-import {Rank, Suit} from "./components/Card.tsx";
+import {Rank, Suit} from "./components/PlayPage/Card.tsx";
 import {useState} from "react";
 import rawEnemyCardData from "./data/enemyCards.json"
 import rawCardData from "./data/cards.json"

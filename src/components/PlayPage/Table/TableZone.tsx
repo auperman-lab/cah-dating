@@ -1,7 +1,8 @@
 import {useDroppable} from "@dnd-kit/core";
-import {Rank, Suit} from "./Card.tsx";
+import {Rank, Suit} from "../Card.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import TableCardContainer from "./TableCardContainer.tsx";
+import TableCardDeckContainer from "./TableCardDeckContainer.tsx";
 
 interface CardData {
   id: string
@@ -13,9 +14,9 @@ interface CardData {
 interface PositionedCard extends CardData {
   x: number;
   y: number;
-  startX: number; // drop start x
-  startY: number; // drop start y
-  animating: boolean; // control animation state
+  startX: number;
+  startY: number;
+  animating: boolean;
 }
 
 
@@ -39,6 +40,9 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
       const existingIds = new Set(prev.map((c) => c.id));
       const newCards = droppedCards.filter(c => !existingIds.has(c.id));
 
+      const containerWidth = containerRef.current ? containerRef.current.clientWidth - 50 : 0;
+      const containerHeight = containerRef.current ? containerRef.current.clientHeight - 100 : 0;
+
 
       const newPositioned = newCards.map((card) => {
 
@@ -53,8 +57,8 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
           ...card,
           startX: startPos.x,
           startY: startPos.y,
-          x: Math.random() * 400,
-          y: Math.random() * 400,
+          x: Math.random() *  containerWidth,
+          y: Math.random() *  containerHeight,
           animating: true,
         };
       });
@@ -65,7 +69,7 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
   }, [droppedCards]);
 
   return (
-    <div className={"w-full h-full flex justify-center items-center mx-10 my-auto "}
+    <div className={"w-full h-full flex justify-center items-center "}
          ref={setNodeRef}
     >
       <div
@@ -82,12 +86,14 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
               animating={card.animating!}
               startX={card.startX!}
               startY={card.startY!}
-
             />
-        )}
+          )}
         )}
       </div>
-      <div ></div>
+      <div className={"w-[20%] h-full border flex flex-col"}>
+        <TableCardDeckContainer deck={droppedCards}/>
+        <TableCardDeckContainer deck={droppedCards}/>
+      </div>
     </div>
 
   );

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {Rank, Suit} from "./Card.tsx";
-import Card from "./Card.tsx";
+import {Rank, Suit} from "../Card.tsx";
+import Card from "../Card.tsx";
 import {useDraggable} from "@dnd-kit/core";
 
 
@@ -15,10 +15,9 @@ interface CardContainerProps {
   cardProp: CardData;
   x: number;
   y: number;
-  startX: number;
-  startY: number;
-  animating: boolean;
-
+  startX?: number;
+  startY?: number;
+  animating?: boolean;
 }
 
 const TableCardContainer: React.FC<CardContainerProps> = ({ cardProp,x,y, animating, startX, startY }) => {

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
-import CardContainer from "./CardContainer.tsx";
-import {Rank, Suit} from "./Card.tsx";
+import CardPlayerContainer from "./CardPlayerContainer.tsx";
+import {Rank, Suit} from "../Card.tsx";
 
 interface CardData {
   id: string
@@ -74,7 +74,7 @@ const CardPlayerZone: React.FC<CardDropZoneProps> = ({ player,cards, angle= null
       >
           {cards.map((card, index) => {
             return (
-              <CardContainer
+              <CardPlayerContainer
                 key={card.id}
                 cardProp={card}
                 index={index}
