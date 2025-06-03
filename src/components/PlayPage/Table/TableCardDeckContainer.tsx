@@ -10,9 +10,11 @@ interface CardData {
 
 interface TableCardDeckContainerProps {
   deck: CardData[];
+  faceUp?: boolean
+
 }
 
-const TableCardDeckContainer: React.FC<TableCardDeckContainerProps> = ({ deck }) => {
+const TableCardDeckContainer: React.FC<TableCardDeckContainerProps> = ({ deck, faceUp = false }) => {
   const maxOffsetX = 15;
   const maxOffsetY = 5;
   const stepX = 3;
@@ -27,12 +29,13 @@ const TableCardDeckContainer: React.FC<TableCardDeckContainerProps> = ({ deck })
           style={{
             left: `${Math.min(index * stepX, maxOffsetX)}px`,
             top: `${Math.min(index * stepY, maxOffsetY)}px`,
+            transform: `rotate(${!faceUp ? '0deg' : Math.random() * 40}deg)`,
           }}
         >
           <Card
             suit={card.suit}
             rank={card.rank}
-            faceUp={false}
+            faceUp={faceUp}
           />
 
         </div>

@@ -3,6 +3,7 @@ import {Rank, Suit} from "../Card.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import TableCardContainer from "./TableCardContainer.tsx";
 import TableCardDeckContainer from "./TableCardDeckContainer.tsx";
+import {useDeck} from "../../../context/DeckContext.tsx";
 
 interface CardData {
   id: string
@@ -19,7 +20,6 @@ interface PositionedCard extends CardData {
   animating: boolean;
 }
 
-
 interface TableZoneProps {
   droppedCards: CardData[];
 }
@@ -32,7 +32,7 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
 
   const [positionedCards, setPositionedCards] = useState<PositionedCard[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const { deck } = useDeck();
 
 
   useEffect(() => {
@@ -91,8 +91,8 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
         )}
       </div>
       <div className={"w-[20%] h-full border flex flex-col"}>
-        <TableCardDeckContainer deck={droppedCards}/>
-        <TableCardDeckContainer deck={droppedCards}/>
+        <TableCardDeckContainer deck={deck}/>
+        <TableCardDeckContainer deck={deck} faceUp={true}/>
       </div>
     </div>
 

@@ -4,6 +4,8 @@ import {Rank, Suit} from "./components/PlayPage/Card.tsx";
 import {useState} from "react";
 import rawEnemyCardData from "./data/enemyCards.json"
 import rawCardData from "./data/cards.json"
+import { DeckProvider } from "./context/DeckContext";
+
 
 
 interface CardData {
@@ -65,10 +67,13 @@ function App() {
 
 
   return (
-    <div className="w-[100%] h-screen relative">
-      <PlayPage players={players} currentPlayer={currentPlayer }></PlayPage>
-    </div>
-  );
+    <DeckProvider>
+      <div className="w-[100%] h-screen relative">
+        <PlayPage players={players} currentPlayer={currentPlayer }></PlayPage>
+      </div>
+    </DeckProvider>
+
+      );
 }
 
 export default App;
