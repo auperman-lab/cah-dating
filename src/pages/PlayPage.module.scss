@@ -1,0 +1,128 @@
+.PlayPageWrap{
+  background-color: #121212;
+  background-image: radial-gradient(
+                  circle at center,
+                  rgba(250, 221, 101, 0.68) 0%,
+                  rgba(246, 223, 127, 0.39) 45%,
+                  rgba(250, 232, 156, 0.05) 75%,
+                  transparent 80%
+  );
+  width: 100%;
+  height: 100vh;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .playerWrap{
+    background-color: #0b3d0b;
+    border-radius: 20px;
+    border: 5px solid saddlebrown;
+    width: 100%;
+    max-height: 220px;
+    max-width: 420px;
+    height: 100%;
+    color: black;
+    transform: rotate(180deg);
+  }
+
+  .playersColumn {
+    height: 100vh;
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 6vh;
+
+
+    .playerWrapColumn {
+      background-color: #0b3d0b;
+      border-radius: 20px;
+      border: 5px solid saddlebrown;
+      height: 100%;
+      width: 100%;
+      max-height: 380px;
+      max-width: 280px;
+      margin-bottom: 10vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+
+  }
+  .tableColumn{
+    height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .playerblock{
+      width: 100%;
+      height: 100%;
+      max-height: 220px;
+
+      display: flex;
+      gap: 12px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    .table {
+      width: 100%;
+      height: 100%;
+      background-color: #1e3d2f;
+      background-image:
+              linear-gradient(45deg, rgba(48, 32, 16, 0.2) 1px, transparent 1px),
+              linear-gradient(-45deg, rgba(48, 32, 16, 0.2) 1px, transparent 1px);
+      background-size: 35px 35px;
+      border-radius: 300px;
+      border: 5px solid saddlebrown;
+      margin: 20px 20px;
+
+      animation: levitate 6s ease-in-out infinite; // durata mai mare pentru mișcare mai lentă
+      transform-origin: center;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes levitate {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      25% {
+        transform: translate(1px, -1px) rotate(1deg); // mișcare și rotație minimă
+      }
+      50% {
+        transform: translate(-1px, 2px) rotate(-1deg); // mișcare și rotație minimă
+      }
+      75% {
+        transform: translate(1px, -2px) rotate(1deg); // mișcare și rotație minimă
+      }
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+    }
+
+
+
+    .userblock{
+      width: 70%;
+      height: 100%;
+      max-height: 280px;
+
+      .userWrap{
+        width: 100%;
+        height: 100%;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border: 5px solid saddlebrown;
+        background-color: #0b3d0b;
+        text-align: center;
+        color: black;
+      }
+    }
+  }
+}

@@ -1,0 +1,71 @@
+[
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b-hearts",
+    "faceUp": false
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b1-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b2-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b9-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b7-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b6-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b5-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b4-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "hearts",
+    "rank": "A",
+    "id": "b3-hearts",
+    "faceUp": false
+
+  },
+  {
+    "suit": "spades",
+    "rank": "K",
+    "id": "bk-spades",
+    "faceUp": false
+
+  }
+]
