@@ -14,42 +14,62 @@ const PlayPage = () => {
 
   const [tableCards, setTableCards] = useState<CardData[]>([]);
   const {player, setPlayer, addCardToHand} = usePlayer();
-  const {enemies, addCardToEnemy} = useEnemies();
+  const {enemies, addCardToEnemy, setEnemies} = useEnemies();
   const {giveCard } = useDeck()
 
 
   const getCardPos = (id: string) => player.hand.findIndex((card) => card.id === id);
 
   const handleDragEnd = (event: DragEndEvent) => {
-    const {active, over} = event;
+    const { active, over } = event;
 
+    if (!active || !over) return;
 
-    if (active && over && over.id === "table-zone") {
-      const cardId = active.id;
-      const cardIndex = getCardPos(cardId as string);
+    const cardId = active.id as string;
 
-      if (cardIndex !== -1) {
-        const cardToMove = player.hand[cardIndex];
+    if (over.id === "table-zone") {
+      const cardIndex = getCardPos(cardId);
+      const cardInPlayerHand = cardIndex !== -1 ? player.hand[cardIndex] : null;
+
+      if (cardInPlayerHand) {
         setPlayer(prev => ({
           ...prev,
-          hand: prev.hand.filter(card => card.id !== cardId)
+          hand: prev.hand.filter(card => card.id !== cardId),
         }));
-        setTableCards((prevTableCards) => [...prevTableCards, cardToMove]);
+        setTableCards(prev => [...prev, cardInPlayerHand]);
         return;
       }
 
-      if (active.id !== over?.id && over) {
-        setPlayer(prev => {
-          const originalPos = getCardPos(active.id as string);
-          const newPos = getCardPos(over?.id as string);
-          return {
-            ...prev,
-            hand: arrayMove(prev.hand, originalPos, newPos)
-          };
-        });
+      // Check if card is in enemy hand
+      const sourceEnemy = enemies.find(enemy => enemy.hand.some(card => card.id === cardId));
+      if (sourceEnemy) {
+        const cardToMove = sourceEnemy.hand.find(c => c.id === cardId);
+        if (cardToMove) {
+          setEnemies(prev =>
+            prev.map(enemy =>
+              enemy.id === sourceEnemy.id
+                ? { ...enemy, hand: enemy.hand.filter(card => card.id !== cardId) }
+                : enemy
+            )
+          );
+          setTableCards(prev => [...prev, cardToMove]);
+          return;
+        }
       }
     }
-  }
+
+    // Player hand rearrangement logic
+    if (active.id !== over.id && over.id !== "table-zone") {
+      const originalPos = getCardPos(active.id as string);
+      const newPos = getCardPos(over.id as string);
+      if (originalPos !== -1 && newPos !== -1) {
+        setPlayer(prev => ({
+          ...prev,
+          hand: arrayMove(prev.hand, originalPos, newPos),
+        }));
+      }
+    }
+  };
 
   const hasDealt = useRef(false);
   const playerRef = useRef(player);
@@ -109,8 +129,9 @@ const PlayPage = () => {
     }
   }, [player.hand.length, enemies]); // Optional: include dependencies for reactivity
 
+  useEffect(() => {
 
-
+  }, []);
 
 
 
