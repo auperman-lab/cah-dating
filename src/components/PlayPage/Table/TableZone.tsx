@@ -26,6 +26,7 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
 
   const [positionedCards, setPositionedCards] = useState<PositionedCard[]>([]);
   const [throwDeck] = useState<CardData[]>([]);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const { deck } = useDeck();
 
@@ -71,6 +72,7 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
       <div
         ref={containerRef}
         className="w-[60%] h-[100%]  relative "
+
       >
         {positionedCards.map((card) =>{
           return (
@@ -86,11 +88,13 @@ const TableZone:React.FC<TableZoneProps> =({droppedCards}) =>{
           )}
         )}
       </div>
+
       <div className={"w-[20%] h-full   flex flex-col"}>
         <div className={"h-[15%] "}/>
         <TableCardDeckContainer deck={deck}/>
         <TableCardDeckContainer deck={throwDeck} faceUp={true}/>
         <div className={"h-[15%] "}/>
+
 
       </div>
     </div>

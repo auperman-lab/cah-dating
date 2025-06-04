@@ -24,8 +24,7 @@ const TableCardContainer: React.FC<CardContainerProps> = ({ cardProp,x,y, animat
     },
   });
   const [animationDone, setAnimationDone] = useState(false);
-
-
+  
   const style: React.CSSProperties = {
     position: "absolute",
     left: animationDone ? x : startX,

@@ -5,8 +5,8 @@ import {PlayerProvider} from "./context/PlayerContext.tsx";
 import {EnemiesProvider} from "./context/EnemiesContext.tsx";
 
 
-function App() {
 
+function App() {
 
   return (
     <DeckProvider>

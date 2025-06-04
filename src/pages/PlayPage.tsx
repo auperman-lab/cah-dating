@@ -14,7 +14,9 @@ const PlayPage = () => {
 
   const [tableCards, setTableCards] = useState<CardData[]>([]);
   const {player, setPlayer, addCardToHand} = usePlayer();
+
   const {enemies, addCardToEnemy, setEnemies} = useEnemies();
+
   const {giveCard } = useDeck()
 
 
@@ -70,6 +72,7 @@ const PlayPage = () => {
       }
     }
   };
+
 
   const hasDealt = useRef(false);
   const playerRef = useRef(player);
@@ -129,9 +132,6 @@ const PlayPage = () => {
     }
   }, [player.hand.length, enemies]); // Optional: include dependencies for reactivity
 
-  useEffect(() => {
-
-  }, []);
 
 
 
