@@ -3,11 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://auperman-lab.github.io/cah-dating/npm",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint cah-dating",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -15,6 +18,7 @@
     "@tailwindcss/language-server": "^0.14.16",
     "@tailwindcss/vite": "^4.1.5",
     "dnd-kit": "^0.0.2",
+    "gh-pages": "^6.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sass": "^1.88.0"
