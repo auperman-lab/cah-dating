@@ -1,19 +1,10 @@
 import './App.css';
 import PlayPage from "./pages/PlayPage.tsx"
-import {Rank, Suit} from "./components/PlayPage/Card.tsx";
 import {useState} from "react";
 import rawEnemyCardData from "./data/enemyCards.json"
 import rawCardData from "./data/cards.json"
 import { DeckProvider } from "./context/DeckContext";
 
-
-
-interface CardData {
-  id: string
-  suit: Suit;
-  rank: Rank;
-  faceUp?: boolean;
-}
 
 function App() {
   const [cards] = useState<CardData[]>(rawCardData as CardData[]);
@@ -69,7 +60,7 @@ function App() {
   return (
     <DeckProvider>
       <div className="w-[100%] h-screen relative">
-        <PlayPage players={players} currentPlayer={currentPlayer }></PlayPage>
+        <PlayPage players={players} currentPlayer={currentPlayer }/>
       </div>
     </DeckProvider>
 

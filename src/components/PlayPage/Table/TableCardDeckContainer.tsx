@@ -1,12 +1,8 @@
-import Card, { Rank, Suit } from "../Card.tsx";
-import React from "react";
 
-interface CardData {
-  id: string;
-  suit: Suit;
-  rank: Rank;
-  faceUp?: boolean;
-}
+import React from "react";
+import {CardData} from "../../../types/Card.ts";
+import Card from "../Card.tsx";
+
 
 interface TableCardDeckContainerProps {
   deck: CardData[];
@@ -37,11 +33,7 @@ const TableCardDeckContainer: React.FC<TableCardDeckContainerProps> = ({ deck, f
                 zIndex: index,
               }}
             >
-              <Card
-                suit={card.suit}
-                rank={card.rank}
-                faceUp={faceUp}
-              />
+              <Card card={{ ...card, faceUp }} />
             </div>
           );
       })}

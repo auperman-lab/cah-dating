@@ -1,24 +1,13 @@
 import styles from './PlayPage.module.scss';
 import React, { useState} from "react";
-import {Rank, Suit} from "../components/PlayPage/Card.tsx";
 import CardPlayerZone from "../components/PlayPage/Player/CardPlayerZone.tsx";
 import {DndContext, DragEndEvent, pointerWithin} from "@dnd-kit/core";
 import {arrayMove} from "@dnd-kit/sortable";
 import TableZone from "../components/PlayPage/Table/TableZone.tsx";
+import {Player} from "../types/Player.ts";
+import {CardData} from "../types/Card.ts";
 
-interface Player {
-  id: number,
-  name: string,
-  cards: CardData[],
-  isCurrentUser?: boolean,
-}
 
-interface CardData {
-  id: string
-  suit: Suit;
-  rank: Rank;
-  faceUp?: boolean;
-}
 
 interface Props {
   players: Player[]
@@ -84,7 +73,7 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
       <div className={styles.playersColumn}>
         {left.map(player => (
           <div key={player.id} className={styles.playerWrapColumn}>
-            <CardPlayerZone player={player} cards={player.cards} angle={90} />
+            <CardPlayerZone cards={player.cards} angle={90} />
           </div>
           ))}
       </div>
@@ -92,7 +81,7 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
         <div className={styles.playerblock}>
           {top.map(player => (
             <div key={player.id} className={styles.playerWrap}>
-              <CardPlayerZone player={player}  cards={player.cards}></CardPlayerZone>
+              <CardPlayerZone cards={player.cards}></CardPlayerZone>
             </div>
             ))}
         </div>
@@ -101,7 +90,7 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
         </div>
         <div className={styles.userblock}>
           {currentUser && <div className={styles.userWrap}>
-            <CardPlayerZone player={currentPlayer} cards={cards} />
+            <CardPlayerZone cards={cards} />
 
           </div>}
         </div>
@@ -109,7 +98,7 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
       <div className={styles.playersColumn}>
         {right.map(player => (
           <div key={player.id} className={styles.playerWrapColumn}>
-            <CardPlayerZone player={player} cards={player.cards} angle={-90} />
+            <CardPlayerZone cards={player.cards} angle={-90} />
           </div>
         ))}
       </div>

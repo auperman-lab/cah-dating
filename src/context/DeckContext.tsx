@@ -1,23 +1,13 @@
 import { createContext, useContext, useReducer, useEffect, ReactNode } from "react";
 import fulldeck from "../data/deck.ts";
-import { Rank, Suit } from "../components/PlayPage/Card.tsx";
+import {CardData} from "../types/Card.ts";
 
-// Type for a single card
-export interface CardData {
-  id: string;
-  suit: Suit;
-  rank: Rank;
-  faceUp?: boolean;
-}
-
-// Reducer action types
 type DeckAction =
   | { type: "INIT_DECK"; payload: CardData[] }
   | { type: "GIVE_CARD" }
   | { type: "SHUFFLE" }
   | { type: "RESET" };
 
-// Context state
 interface DeckContextType {
   deck: CardData[];
   giveCard: () => CardData | null;
@@ -25,12 +15,10 @@ interface DeckContextType {
   resetDeck: () => void;
 }
 
-// Context creation
 const DeckContext = createContext<DeckContextType | undefined>(undefined);
 
 const DECK_STORAGE_KEY = "deck";
 
-// Reducer implementation
 const deckReducer = (state: CardData[], action: DeckAction): CardData[] => {
   switch (action.type) {
     case "INIT_DECK":
@@ -51,7 +39,6 @@ const deckReducer = (state: CardData[], action: DeckAction): CardData[] => {
   }
 };
 
-// Provider props
 interface DeckProviderProps {
   children: ReactNode;
 }

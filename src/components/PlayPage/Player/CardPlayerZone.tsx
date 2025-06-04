@@ -1,30 +1,14 @@
 import React, {useEffect, useRef, useState} from "react";
 import CardPlayerContainer from "./CardPlayerContainer.tsx";
-import {Rank, Suit} from "../Card.tsx";
-
-interface CardData {
-  id: string
-  suit: Suit;
-  rank: Rank;
-  faceUp?: boolean;
-}
-
-interface Player {
-  id: number,
-  name: string,
-  cards: CardData[],
-  isCurrentUser?: boolean,
-}
-
+import {CardData} from "../../../types/Card.ts";
 
 
 interface CardDropZoneProps {
-  player: Player;
   cards: CardData[]
   angle?: number;
 }
 
-const CardPlayerZone: React.FC<CardDropZoneProps> = ({ player,cards, angle= null }) => {
+const CardPlayerZone: React.FC<CardDropZoneProps> = ({cards, angle= null }) => {
   const dropZoneRef = useRef<HTMLDivElement>(null);
   const [parentWidth, setParentWidth] = useState<number>(0);
   const [parentHeight, setParentHeight] = useState<number>(0);

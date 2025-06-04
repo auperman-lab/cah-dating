@@ -1,16 +1,10 @@
 import {useDroppable} from "@dnd-kit/core";
-import {Rank, Suit} from "../Card.tsx";
 import React, {useEffect, useRef, useState} from "react";
 import TableCardContainer from "./TableCardContainer.tsx";
 import TableCardDeckContainer from "./TableCardDeckContainer.tsx";
 import {useDeck} from "../../../context/DeckContext.tsx";
+import {CardData} from "../../../types/Card.ts";
 
-interface CardData {
-  id: string
-  suit: Suit;
-  rank: Rank;
-  faceUp?: boolean;
-}
 
 interface PositionedCard extends CardData {
   x: number;

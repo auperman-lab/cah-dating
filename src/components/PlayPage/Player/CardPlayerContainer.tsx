@@ -1,27 +1,15 @@
 import React, {useState} from "react";
-import {Rank, Suit} from "../Card.tsx";
 import Card from "../Card.tsx";
 import {useDraggable} from "@dnd-kit/core";
-
-
-interface CardData {
-  id: string
-  suit: Suit;
-  rank: Rank;
-  faceUp?: boolean;
-}
+import {CardData} from "../../../types/Card.ts";
 
 interface CardContainerProps {
   cardProp: CardData;
   index: number;
   total: number;
-  parentWidth: number; // New prop for parent container width
-
+  parentWidth: number;
 }
-
 const CardPlayerContainer: React.FC<CardContainerProps> = ({ cardProp, index, total, parentWidth }) => {
-
-
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: cardProp.id,
     data: {
@@ -67,7 +55,7 @@ const CardPlayerContainer: React.FC<CardContainerProps> = ({ cardProp, index, to
       {...attributes}
       {...listeners}
     >
-      <Card suit={cardProp.suit} rank={cardProp.rank} faceUp={cardProp.faceUp} />
+      <Card card={cardProp} />
     </div>
   );
 };
