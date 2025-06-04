@@ -55,7 +55,6 @@ const PlayPage = () => {
   const playerRef = useRef(player);
   const enemiesRef = useRef(enemies);
 
-// Keep refs in sync with state
   useEffect(() => {
     playerRef.current = player;
   }, [player]);
