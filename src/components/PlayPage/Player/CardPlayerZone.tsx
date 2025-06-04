@@ -4,11 +4,11 @@ import {CardData} from "../../../types/Card.ts";
 
 
 interface CardDropZoneProps {
-  cards: CardData[]
+  cards?: CardData[]
   angle?: number;
 }
 
-const CardPlayerZone: React.FC<CardDropZoneProps> = ({cards, angle= null }) => {
+const CardPlayerZone: React.FC<CardDropZoneProps> = ({cards = null, angle= null }) => {
   const dropZoneRef = useRef<HTMLDivElement>(null);
   const [parentWidth, setParentWidth] = useState<number>(0);
   const [parentHeight, setParentHeight] = useState<number>(0);
@@ -56,7 +56,7 @@ const CardPlayerZone: React.FC<CardDropZoneProps> = ({cards, angle= null }) => {
             : {}),
         }}
       >
-          {cards.map((card, index) => {
+          {cards?.map((card, index) => {
             return (
               <CardPlayerContainer
                 key={card.id}
