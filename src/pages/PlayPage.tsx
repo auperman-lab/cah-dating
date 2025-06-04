@@ -1,5 +1,5 @@
 import styles from './PlayPage.module.scss';
-import { useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import CardPlayerZone from "../components/PlayPage/Player/CardPlayerZone.tsx";
 import {DndContext, DragEndEvent, pointerWithin} from "@dnd-kit/core";
 import {arrayMove} from "@dnd-kit/sortable";
@@ -7,13 +7,15 @@ import TableZone from "../components/PlayPage/Table/TableZone.tsx";
 import {CardData} from "../types/Card.ts";
 import {usePlayer} from "../context/PlayerContext.tsx";
 import {useEnemies} from "../context/EnemiesContext.tsx";
+import {useDeck} from "../context/DeckContext.tsx";
 
 
 const PlayPage = () => {
 
   const [tableCards, setTableCards] = useState<CardData[]>([]);
-  const { player, setPlayer } = usePlayer();
-  const { enemies } = useEnemies();
+  const {player, setPlayer, addCardToHand} = usePlayer();
+  const {enemies, addCardToEnemy} = useEnemies();
+  const {giveCard } = useDeck()
 
 
   const getCardPos = (id: string) => player.hand.findIndex((card) => card.id === id);
@@ -48,6 +50,70 @@ const PlayPage = () => {
       }
     }
   }
+
+  const hasDealt = useRef(false);
+  const playerRef = useRef(player);
+  const enemiesRef = useRef(enemies);
+
+// Keep refs in sync with state
+  useEffect(() => {
+    playerRef.current = player;
+  }, [player]);
+
+  useEffect(() => {
+    enemiesRef.current = enemies;
+  }, [enemies]);
+
+  useEffect(() => {
+    const dealCardsWithDelay = async () => {
+      hasDealt.current = true;
+
+      for (let i = 0; i < 7; i++) {
+        // Give card to player
+        await new Promise<void>((resolve) => {
+          giveCard((cardForPlayer) => {
+            if (cardForPlayer) {
+              const cardPlayer = { ...cardForPlayer, faceUp: true };
+              addCardToHand(cardPlayer);
+            }
+            resolve();
+          });
+        });
+
+        await new Promise((r) => setTimeout(r, 100));
+
+        // Give card to each enemy
+        for (const enemy of enemiesRef.current) {
+          await new Promise<void>((resolve) => {
+            giveCard((cardForEnemy) => {
+              if (cardForEnemy) {
+                const cardEnemy = { ...cardForEnemy };
+                addCardToEnemy(enemy.id, cardEnemy);
+              }
+              resolve();
+            });
+          });
+
+          await new Promise((r) => setTimeout(r, 100));
+        }
+
+        await new Promise((r) => setTimeout(r, 300));
+      }
+    };
+
+    if (
+      !hasDealt.current &&
+      player.hand.length === 0 &&
+      enemies.every((e) => e.hand.length === 0)
+    ) {
+      dealCardsWithDelay();
+    }
+  }, [player.hand.length, enemies]); // Optional: include dependencies for reactivity
+
+
+
+
+
 
   return (
     <DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd}>

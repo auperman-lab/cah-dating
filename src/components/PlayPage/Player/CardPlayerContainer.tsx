@@ -41,7 +41,7 @@ const CardPlayerContainer: React.FC<CardContainerProps> = ({ cardProp, index, to
     transform: `translate(-50%, -50%) translate(${dragX + offsetX}px, ${dragY + offsetY}px) rotate(${angle}deg) scale(${scale})`,
     transformOrigin: "bottom center",
     transition: "transform 300ms ease",
-    zIndex: isHovered ? 1 : 1,
+    zIndex: isHovered ? 10 : 1,
     cursor: "grab",
     touchAction: "none",
   };

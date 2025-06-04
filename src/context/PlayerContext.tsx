@@ -15,12 +15,8 @@ const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [player, setPlayer] = useState<Player>(() => {
-    const stored = localStorage.getItem(PLAYER_STORAGE_KEY);
-    return stored
-      ? JSON.parse(stored)
-      : [
-          { id: 1, name: "Player 1", hand: [], position: "top" },
-        ];
+    // const stored = localStorage.getItem(PLAYER_STORAGE_KEY);
+    return { id: 1, name: "Player 1", hand: [] };
   });
 
   useEffect(() => {
@@ -28,7 +24,12 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, [player]);
 
   const addCardToHand = (card: CardData) => {
-    setPlayer((prev) => ({ ...prev, hand: [...prev.hand, card] }));
+    setPlayer((prev) => {
+      const alreadyInHand = prev.hand.some((c) => c.id === card.id);
+      if (alreadyInHand) return prev;
+
+      return { ...prev, hand: [...prev.hand, card] };
+    });
   };
 
   return (

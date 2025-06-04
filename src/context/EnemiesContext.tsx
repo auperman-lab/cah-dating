@@ -34,11 +34,17 @@ export const EnemiesProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
   const addCardToEnemy = (enemyId: number, card: CardData) => {
     setEnemies((prev) =>
-      prev.map((enemy) =>
-        enemy.id === enemyId ? { ...enemy, hand: [...enemy.hand, card] } : enemy
-      )
+      prev.map((enemy) => {
+        if (enemy.id !== enemyId) return enemy;
+
+        const alreadyInHand = enemy.hand.some((c) => c.id === card.id);
+        if (alreadyInHand) return enemy;
+
+        return { ...enemy, hand: [...enemy.hand, card] };
+      })
     );
   };
+
 
   return (
     <EnemiesContext.Provider value={{ enemies, setEnemies, addCardToEnemy }}>
