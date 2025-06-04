@@ -1,11 +1,10 @@
 import styles from './PlayPage.module.scss';
-import React, {useState} from "react";
+import React, { useState} from "react";
 import {Rank, Suit} from "../components/PlayPage/Card.tsx";
 import CardPlayerZone from "../components/PlayPage/Player/CardPlayerZone.tsx";
 import {DndContext, DragEndEvent, pointerWithin} from "@dnd-kit/core";
 import {arrayMove} from "@dnd-kit/sortable";
 import TableZone from "../components/PlayPage/Table/TableZone.tsx";
-import {useDeck} from "../context/DeckContext.tsx";
 
 interface Player {
   id: number,
@@ -34,7 +33,6 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
   let currentUser: Player = currentPlayer;
   const [cards, setCards] = useState<CardData[]>(currentPlayer.cards)
   const [tableCards, setTableCards] = useState<CardData[]>([]);
-  const {resetDeck} = useDeck()
 
   const getCardPos = (id:string) => cards.findIndex((card) => card.id === id);
 
@@ -74,7 +72,10 @@ const PlayPage: React.FC<Props> = ({ players, currentPlayer }) => {
 };
 
   splitPlayers(players);
-  resetDeck()
+
+  // useEffect(() => {
+  //   console.log("deck", deck)
+  // }, [deck]);
 
   return (
     <DndContext collisionDetection={pointerWithin} onDragEnd={handleDragEnd}>

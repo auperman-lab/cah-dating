@@ -43,6 +43,7 @@ const deckReducer = (state: CardData[], action: DeckAction): CardData[] => {
       return [...state].sort(() => Math.random() - 0.5);
 
     case "RESET":
+      console.log("RESET");
       return fulldeck.sort(() => Math.random() - 0.5) as CardData[];
 
     default:
@@ -56,16 +57,14 @@ interface DeckProviderProps {
 }
 
 export const DeckProvider = ({ children }: DeckProviderProps) => {
-  const [deck, dispatch] = useReducer(deckReducer, []);
-
-  useEffect(() => {
+  const initDeck = () => {
     const stored = localStorage.getItem(DECK_STORAGE_KEY);
-    if (stored) {
-      dispatch({ type: "INIT_DECK", payload: JSON.parse(stored) });
-    } else {
-      dispatch({ type: "RESET" });
-    }
-  }, []);
+    if (stored) return JSON.parse(stored);
+    return fulldeck.sort(() => Math.random() - 0.5);
+  };
+
+  const [deck, dispatch] = useReducer(deckReducer, [], initDeck);
+
 
   useEffect(() => {
     localStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(deck));

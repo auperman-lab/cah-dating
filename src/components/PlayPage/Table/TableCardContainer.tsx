@@ -37,7 +37,7 @@ const TableCardContainer: React.FC<CardContainerProps> = ({ cardProp,x,y, animat
     position: "absolute",
     left: animationDone ? x : startX,
     top: animationDone ? y : startY,
-    transform: animationDone ? "rotate(0deg)" : "rotate(360deg)",
+    transform: animationDone ? `rotate(${Math.random() * 40}deg)` : "rotate(360deg)",
     transition: "left 0.6s ease, top 0.6s ease, transform 0.6s ease",
     cursor: "grab",
     touchAction: "none",
